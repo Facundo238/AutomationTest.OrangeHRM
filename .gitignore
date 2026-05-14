@@ -1,32 +1,4 @@
-# Build output
 bin/
 obj/
-
-# Visual Studio
 .vs/
-*.user
-*.suo
-*.userosscache
-*.sln.docstates
-
-# NuGet
-packages/
-*.nupkg
-project.lock.json
-project.assets.json
-
-# Test results
-TestResults/
-*.trx
-*.coverage
-*.coveragexml
-
-# Logs
-*.log
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Secrets - never commit
 appsettings.json
