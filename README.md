@@ -7,7 +7,7 @@ Selenium test automation suite for [OrangeHRM](https://opensource-demo.orangehrm
 - [.NET 10 SDK](https://dotnet.microsoft.com/download)
 - Google Chrome (latest)
 - Microsoft Edge (latest)
-- OrangeHRM instance running and accessible
+- OrangeHRM 
 
 ## Configuration
 
@@ -16,16 +16,16 @@ Create `AutomationTest.OrangeHRM/appsettings.json` (not committed — contains c
 ```json
 {
   "OrangeHRM": {
-    "BaseUrl": "https://your-orangehrm-instance/",
+    "BaseUrl": "",
     "Users": {
       "Admin": {
-        "Username": "admin",
-        "Password": "admin123"
+        "Username": "",
+        "Password": ""
       }
     }
   },
   "ConnectionStrings": {
-    "OrangeHRM": "Server=localhost;Database=orangehrm;User=root;Password=secret;"
+    "OrangeHRM": ""
   }
 }
 ```
