@@ -83,8 +83,8 @@ AutomationTest.OrangeHRM/
 
 Tests are split into **base classes** (logic) and **browser wrappers** (infrastructure):
 
-- `ABMEmployeeTest` and `MyInfoTest` contain the actual test logic using `[Fact]`
-- `BrowserTests.cs` creates `ChromeXxx` and `EdgeXxx` subclasses bound to xUnit collections
+- `ABMEmployeeTest` and `MyInfoTest` contain the actual test logic 
+- `BrowserTests.cs` creates `Chrome` and `Edge` subclasses bound to xUnit collections
 - Each browser collection shares one `AuthFixture` (single login per suite)
 - Chrome and Edge collections run in **parallel** via xUnit's collection parallelization
 
