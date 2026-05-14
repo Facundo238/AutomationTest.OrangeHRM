@@ -19,7 +19,7 @@ namespace OrangeHRM.AutomationTests.Tests
         [Trait("Module", "Employee")]
         public void TestCreateEmployee()
         {
-            using var context = new TestContext(_auth);
+            using var context = new UserSession(_auth);
             var data = EmployeeDataBuilder.NewEmployee("Test");
 
             _output.WriteLine($"[CreateEmployee] Creating: {data.FirstName} {data.LastName} (ID: {data.EmployeeId})");
@@ -38,7 +38,7 @@ namespace OrangeHRM.AutomationTests.Tests
         [Trait("Module", "Employee")]
         public async Task TestUpdateEmployee()
         {
-            using var context = new TestContext(_auth);
+            using var context = new UserSession(_auth);
             var data = EmployeeDataBuilder.NewEmployee("Upd");
             var updated = EmployeeDataBuilder.NewEmployee("Mod");
 
@@ -60,7 +60,7 @@ namespace OrangeHRM.AutomationTests.Tests
         [Trait("Module", "Employee")]
         public async Task TestDeleteEmployee()
         {
-            using var context = new TestContext(_auth);
+            using var context = new UserSession(_auth);
             var data = EmployeeDataBuilder.NewEmployee("Del");
 
             _output.WriteLine($"[DeleteEmployee] Creating via API: {data.FirstName} {data.LastName} (ID: {data.EmployeeId})");

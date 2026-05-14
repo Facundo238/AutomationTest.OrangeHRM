@@ -6,7 +6,7 @@ using OrangeHRM.AutomationTests.Pages;
 
 namespace OrangeHRM.AutomationTests.Helpers
 {
-    public sealed class TestContext : IDisposable
+    public sealed class UserSession : IDisposable
     {
         private readonly IWebDriver _driver;
         private readonly string _token;
@@ -21,7 +21,7 @@ namespace OrangeHRM.AutomationTests.Helpers
         public EmployeeApiClient ApiClient => _apiClient ??= new EmployeeApiClient(_token);
         public EmployeeDbValidator DbValidator => _dbValidator ??= new EmployeeDbValidator(ConfigurationManager.DbConnectionString);
 
-        public TestContext(AuthFixture auth, string? account = null)
+        public UserSession(AuthFixture auth, string? account = null)
         {
             if (account is null)
             {

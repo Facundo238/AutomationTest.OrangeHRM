@@ -16,8 +16,8 @@ namespace OrangeHRM.AutomationTests.Tests
         [Trait("Module", "MyInfo")]
         public void TestNavigateToMyInfo()
         {
-            using var context = new TestContext(_auth);
-            //using var context2 = new TestContext(_auth, "Admin2");
+            using var context = new UserSession(_auth);
+            //using var context2 = new UserSession(_auth, "Admin2");
 
             context.MyInfoPage.NavigateToMyInfo();
             Assert.True(context.MyInfoPage.IsPersonalDetailsTitleVisible(), "Personal Details not visible for Admin");
