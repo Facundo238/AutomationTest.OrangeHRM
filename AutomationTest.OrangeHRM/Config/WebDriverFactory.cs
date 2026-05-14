@@ -22,11 +22,6 @@ namespace OrangeHRM.AutomationTests.Config
         {
             var options = new ChromeOptions();
             options.AddArgument("--start-maximized");
-            options.AddArgument("--headless=new");
-            options.AddArgument("--no-sandbox");
-            options.AddArgument("--disable-dev-shm-usage");
-            options.AddArgument("--disable-gpu");
-            options.AddArgument("--disable-extensions");
             var driver = new ChromeDriver(options);
             driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(30);
             return driver;
@@ -37,11 +32,6 @@ namespace OrangeHRM.AutomationTests.Config
             new DriverManager().SetUpDriver(new EdgeConfig());
             var options = new EdgeOptions();
             options.AddArgument("--start-maximized");
-            options.AddArgument("--headless=new");
-            options.AddArgument("--no-sandbox");
-            options.AddArgument("--disable-dev-shm-usage");
-            options.AddArgument("--disable-gpu");
-            options.AddArgument("--disable-extensions");
             var driver = new EdgeDriver(options);
             driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(30);
             return driver;
