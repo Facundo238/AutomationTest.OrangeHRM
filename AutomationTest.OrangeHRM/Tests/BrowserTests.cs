@@ -3,15 +3,15 @@ using Xunit.Abstractions;
 
 namespace OrangeHRM.AutomationTests.Tests
 {
-    [CollectionDefinition("Chrome")]
+    [CollectionDefinition("ChromeABMEmployee")]
     public class ChromeCollection : ICollectionFixture<ChromeAuthFixture> { }
 
-    [CollectionDefinition("Edge")]
+    [CollectionDefinition("EdgeABMEmployee")]
     public class EdgeCollection : ICollectionFixture<EdgeAuthFixture> { }
 
-    [Collection("Chrome")] [Trait("Browser", "Chrome")] public class ChromeEmployeeTests(ChromeAuthFixture f, ITestOutputHelper o) : ABMEmployeeTest(f, o) { }
-    [Collection("Chrome")] [Trait("Browser", "Chrome")] public class ChromeMyInfoTests(ChromeAuthFixture f) : MyInfoTest(f) { }
+    [Collection("ChromeABMEmployee")] [Trait("Browser", "Chrome")] public class ChromeEmployeeTests(ChromeAuthFixture f, ITestOutputHelper o) : ABMEmployeeTest(f, o) { }
+    [Trait("Browser", "Chrome")] public class ChromeMyInfoTests() : MyInfoTest(new ChromeAuthFixture()) { }
 
-    [Collection("Edge")] [Trait("Browser", "Edge")] public class EdgeEmployeeTests(EdgeAuthFixture f, ITestOutputHelper o) : ABMEmployeeTest(f, o) { }
-    [Collection("Edge")] [Trait("Browser", "Edge")] public class EdgeMyInfoTests(EdgeAuthFixture f) : MyInfoTest(f) { }
+    [Collection("EdgeABMEmployee")] [Trait("Browser", "Edge")] public class EdgeEmployeeTests(EdgeAuthFixture f, ITestOutputHelper o) : ABMEmployeeTest(f, o) { }
+    [Trait("Browser", "Edge")] public class EdgeMyInfoTests() : MyInfoTest(new EdgeAuthFixture()) { }
 }

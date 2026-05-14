@@ -3,27 +3,19 @@ using OrangeHRM.AutomationTests.Helpers;
 
 namespace OrangeHRM.AutomationTests.Tests
 {
-    public abstract class MyInfoTest
+    public abstract class MyInfoTest(AuthFixture auth) : IDisposable
     {
-        private readonly AuthFixture _auth;
-
-        protected MyInfoTest(AuthFixture auth)
-        {
-            _auth = auth;
-        }
+        private readonly AuthFixture _auth = auth;
 
         [Fact]
         [Trait("Module", "MyInfo")]
         public void TestNavigateToMyInfo()
         {
             using var context = new UserSession(_auth);
-            //using var context2 = new UserSession(_auth, "Admin2");
-
             context.MyInfoPage.NavigateToMyInfo();
             Assert.True(context.MyInfoPage.IsPersonalDetailsTitleVisible(), "Personal Details not visible for Admin");
-
-            //context2.MyInfoPage.NavigateToMyInfo();
-            //Assert.True(context2.MyInfoPage.IsPersonalDetailsTitleVisible(), "Personal Details not visible for Admin2");
         }
+
+        public void Dispose() => _auth.Dispose();
     }
 }

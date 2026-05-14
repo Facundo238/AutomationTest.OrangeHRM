@@ -83,10 +83,10 @@ AutomationTest.OrangeHRM/
 
 Tests are split into **base classes** (logic) and **browser wrappers** (infrastructure):
 
-- `ABMEmployeeTest` and `MyInfoTest` contain the actual test logic 
-- `BrowserTests.cs` creates `Chrome` and `Edge` subclasses bound to xUnit collections
-- Each browser collection shares one `AuthFixture` (single login per suite)
-- Chrome and Edge collections run in **parallel** via xUnit's collection parallelization
+- `ABMEmployeeTest` and `MyInfoTest` contain the actual test logic
+- `BrowserTests.cs` wires concrete Chrome/Edge subclasses to xUnit collections and fixtures
+- Employee tests use `ICollectionFixture` — one shared `AuthFixture` (single browser) per suite, tests run sequentially within the collection
+- MyInfo tests create their own `AuthFixture` instance per run — isolated browser, no shared state
 
 ## Parallelism
 
@@ -99,4 +99,4 @@ Configured in `xunit.runner.json`:
 }
 ```
 
-Chrome and Edge suites run simultaneously. Tests within the same collection run sequentially to share the browser session safely.
+Collections run in parallel up to `maxParallelThreads`. Chrome and Edge Employee suites each form a collection (`ChromeABMEmployee` / `EdgeABMEmployee`). MyInfo tests have no collection — each gets its own implicit collection and opens a fresh browser.
