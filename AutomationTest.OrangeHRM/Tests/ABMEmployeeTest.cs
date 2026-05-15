@@ -5,8 +5,8 @@ using Xunit.Abstractions;
 // Browser-specific runners
 namespace OrangeHRM.AutomationTests.Tests
 {
-    [Collection("ChromeABMEmployee")] [Trait("Browser", "Chrome")] public class ChromeEmployeeTests(ChromeAuthFixture f, ITestOutputHelper o) : ABMEmployeeTest(f, o) { }
-    [Collection("EdgeABMEmployee")]   [Trait("Browser", "Edge")]   public class EdgeEmployeeTests(EdgeAuthFixture f, ITestOutputHelper o)   : ABMEmployeeTest(f, o) { }
+    [Collection("Chrome-Admin")] [Trait("Browser", "Chrome")] public class ChromeEmployeeTests(ChromeAdminFixture f, ITestOutputHelper o) : ABMEmployeeTest(f, o) { }
+    [Collection("Edge-Admin")]   [Trait("Browser", "Edge")]   public class EdgeEmployeeTests(EdgeAdminFixture f, ITestOutputHelper o)   : ABMEmployeeTest(f, o) { }
 }
 
 namespace OrangeHRM.AutomationTests.Tests

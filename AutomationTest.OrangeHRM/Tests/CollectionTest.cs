@@ -2,9 +2,9 @@ using OrangeHRM.AutomationTests.Fixtures;
 
 namespace OrangeHRM.AutomationTests.Tests
 {
-    [CollectionDefinition("ChromeABMEmployee")]
-    public class ChromeCollection : ICollectionFixture<ChromeAuthFixture> { }
+    [CollectionDefinition("Chrome-Admin")]
+    public class ChromeAdminCollection : ICollectionFixture<ChromeAdminFixture> { }
 
-    [CollectionDefinition("EdgeABMEmployee")]
-    public class EdgeCollection : ICollectionFixture<EdgeAuthFixture> { }
+    [CollectionDefinition("Edge-Admin")]
+    public class EdgeAdminCollection : ICollectionFixture<EdgeAdminFixture> { }
 }

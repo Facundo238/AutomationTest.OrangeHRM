@@ -5,8 +5,8 @@ using OrangeHRM.AutomationTests.Helpers;
 // Browser-specific runners
 namespace OrangeHRM.AutomationTests.Tests
 {
-    [Trait("Browser", "Chrome")] public class ChromeMyInfoTests() : MyInfoTest(new ChromeAuthFixture()) { }
-    [Trait("Browser", "Edge")]   public class EdgeMyInfoTests()   : MyInfoTest(new EdgeAuthFixture())   { }
+    [Trait("Browser", "Chrome")] public class ChromeMyInfoTests() : MyInfoTest(new ChromeAdminFixture()) { }
+    [Trait("Browser", "Edge")]   public class EdgeMyInfoTests()   : MyInfoTest(new EdgeAdminFixture())   { }
 }
 
 namespace OrangeHRM.AutomationTests.Tests

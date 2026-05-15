@@ -30,13 +30,13 @@ namespace OrangeHRM.AutomationTests.Fixtures
         }
     }
 
-    public class ChromeAuthFixture : AuthFixture
+    public class ChromeAdminFixture : AuthFixture
     {
-        public ChromeAuthFixture() : base("chrome", "Admin") { }
+        public ChromeAdminFixture() : base("chrome", "Admin") { }
     }
 
-    public class EdgeAuthFixture : AuthFixture
+    public class EdgeAdminFixture : AuthFixture
     {
-        public EdgeAuthFixture() : base("edge", "Admin") { }
+        public EdgeAdminFixture() : base("edge", "Admin") { }
     }
 }
