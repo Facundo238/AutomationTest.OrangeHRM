@@ -73,20 +73,27 @@ AutomationTest.OrangeHRM/
 │   ├── LoginPage.cs              # Login flow
 │   └── MyInfoPage.cs             # My Info module interactions
 ├── Tests/
-│   ├── ABMEmployeeTest.cs        # Employee Create/Update/Delete test logic
-│   ├── BrowserTests.cs           # Wires Chrome and Edge collections
-│   └── MyInfoTest.cs             # My Info test logic
+│   ├── ABMEmployeeTest.cs        # Employee Create/Update/Delete test logic + Chrome/Edge runners
+│   ├── CollectionTest.cs         # xUnit collection definitions (Chrome/Edge fixtures)
+│   └── MyInfoTest.cs             # My Info test logic + Chrome/Edge runners
 └── appsettings.json              # Local config (not committed)
 ```
 
 ## Architecture
 
-Tests are split into **base classes** (logic) and **browser wrappers** (infrastructure):
+Tests are split into **base classes** (logic) and **browser runners** (infrastructure):
 
-- `ABMEmployeeTest` and `MyInfoTest` contain the actual test logic
-- `BrowserTests.cs` wires concrete Chrome/Edge subclasses to xUnit collections and fixtures
+- `ABMEmployeeTest` and `MyInfoTest` contain the actual test logic as abstract classes
+- Each test file defines its own Chrome/Edge concrete subclasses at the top — self-contained modules
+- `CollectionTest.cs` only holds xUnit `CollectionDefinition` declarations (required by the framework)
 - Employee tests use `ICollectionFixture` — one shared `AuthFixture` (single browser) per suite, tests run sequentially within the collection
 - MyInfo tests create their own `AuthFixture` instance per run — isolated browser, no shared state
+
+### Page Object helpers (BasePage)
+
+- `Click` — retries on `StaleElementReferenceException` and `ElementClickInterceptedException` (handles Vue overlays)
+- `ClearAndFill` — clears field and types value with separate `SendKeys` calls to trigger Vue input events
+- `WaitForElementToHaveValue` — waits until a field is visible and has a non-empty value
 
 ## Parallelism
 
