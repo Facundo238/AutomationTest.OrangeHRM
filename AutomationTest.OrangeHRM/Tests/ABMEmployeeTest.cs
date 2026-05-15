@@ -2,6 +2,13 @@ using OrangeHRM.AutomationTests.Fixtures;
 using OrangeHRM.AutomationTests.Helpers;
 using Xunit.Abstractions;
 
+// Browser-specific runners
+namespace OrangeHRM.AutomationTests.Tests
+{
+    [Collection("ChromeABMEmployee")] [Trait("Browser", "Chrome")] public class ChromeEmployeeTests(ChromeAuthFixture f, ITestOutputHelper o) : ABMEmployeeTest(f, o) { }
+    [Collection("EdgeABMEmployee")]   [Trait("Browser", "Edge")]   public class EdgeEmployeeTests(EdgeAuthFixture f, ITestOutputHelper o)   : ABMEmployeeTest(f, o) { }
+}
+
 namespace OrangeHRM.AutomationTests.Tests
 {
     public abstract class ABMEmployeeTest
@@ -25,7 +32,7 @@ namespace OrangeHRM.AutomationTests.Tests
             _output.WriteLine($"[CreateEmployee] Creating: {data.FirstName} {data.LastName} (ID: {data.EmployeeId})");
             context.EmployeePage.NavigateToEmployeeList();
             context.EmployeePage.ClickAddEmployee();
-            context.EmployeePage.FillEmployeeData(data.FirstName, data.LastName, data.EmployeeId);
+            context.EmployeePage.FillEmployee(data.FirstName, data.LastName, data.EmployeeId);
             context.EmployeePage.SaveEmployee();
 
             var success = context.EmployeePage.IsSuccessMessageDisplayed();
@@ -48,7 +55,9 @@ namespace OrangeHRM.AutomationTests.Tests
             _output.WriteLine($"[UpdateEmployee] Updating to: {updated.FirstName} {updated.LastName}");
             context.EmployeePage.NavigateToEmployeeList();
             context.EmployeePage.SearchEmployee(data.EmployeeId);
-            context.EmployeePage.EditEmployee(updated.FirstName, updated.LastName);
+            context.EmployeePage.ClickEditEmployee();
+            context.EmployeePage.FillEmployee(updated.FirstName, updated.LastName);
+            context.EmployeePage.SaveEmployee();
 
             var success = context.EmployeePage.IsSuccessMessageDisplayed();
             _output.WriteLine($"[UpdateEmployee] Result: {(success ? "OK" : "FAILED")}");

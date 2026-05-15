@@ -16,19 +16,37 @@ namespace OrangeHRM.AutomationTests.Pages
 
         protected void Click(By locator)
         {
-            try
+            var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
+            wait.IgnoreExceptionTypes(typeof(StaleElementReferenceException), typeof(ElementClickInterceptedException));
+            wait.Until(d =>
             {
                 WaitForElementVisible(locator).Click();
-            }
-            catch (StaleElementReferenceException)
-            {
-                WaitForElementVisible(locator).Click();
-            }
+                return true;
+            });
         }
 
         protected void SendKeys(By locator, string text)
         {
             WaitForElementVisible(locator).SendKeys(text);
+        }
+
+        protected void ClearAndFill(By locator, string text)
+        {
+            var el = WaitForElementVisible(locator);
+            el.SendKeys(OpenQA.Selenium.Keys.Control + "a");
+            el.SendKeys(OpenQA.Selenium.Keys.Delete);
+            el.SendKeys(text);
+        }
+
+        protected void WaitForElementToHaveValue(By locator, int timeoutSeconds = 10)
+        {
+            var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(timeoutSeconds));
+            wait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException));
+            wait.Until(d =>
+            {
+                var el = d.FindElement(locator);
+                return el.Displayed && el.GetAttribute("value")?.Length > 0;
+            });
         }
 
         protected string GetText(By locator)

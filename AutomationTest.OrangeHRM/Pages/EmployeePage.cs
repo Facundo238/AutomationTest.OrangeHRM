@@ -1,5 +1,4 @@
 using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
 using OrangeHRM.AutomationTests.Config;
 
 namespace OrangeHRM.AutomationTests.Pages
@@ -26,6 +25,7 @@ namespace OrangeHRM.AutomationTests.Pages
         {
             Driver.Navigate().GoToUrl($"{ConfigurationManager.BaseUrl}web/index.php/pim/viewEmployeeList");
             WaitForElementVisible(AddEmployeeButton);
+            WaitForElementVisible(SearchButton);
         }
 
         public void ClickAddEmployee()
@@ -34,63 +34,34 @@ namespace OrangeHRM.AutomationTests.Pages
             WaitForElementVisible(FirstNameField);
         }
 
-        public void FillEmployeeData(string firstName, string lastName, string employeeId)
+        public void FillEmployee(string? firstName = null, string? lastName = null, string? employeeId = null)
         {
-            SendKeys(FirstNameField, firstName);
-            SendKeys(LastNameField, lastName);
-            var idInput = Driver.FindElement(EmployeeIdField);
-            idInput.SendKeys(OpenQA.Selenium.Keys.Control + "a");
-            idInput.SendKeys(OpenQA.Selenium.Keys.Delete);
-            idInput.SendKeys(employeeId);
+            if (firstName != null) ClearAndFill(FirstNameField, firstName);
+            if (lastName != null) ClearAndFill(LastNameField, lastName);
+            if (employeeId != null) ClearAndFill(EmployeeIdField, employeeId);
         }
 
         public void SaveEmployee()
         {
             Click(SaveButton);
-            WaitForElementVisible(SuccessMessage);
         }
 
         public bool IsSuccessMessageDisplayed()
         {
-            return IsElementPresent(SuccessMessage);
+            try { WaitForElementVisible(SuccessMessage); return true; }
+            catch { return false; }
         }
 
         public void SearchEmployee(string employeeId)
         {
-            WaitForElementVisible(SearchButton);
             SendKeys(EmployeeIdField, employeeId);
             Click(SearchButton);
             WaitForElementVisible(EmployeeTableRow);
         }
 
-        public void EditEmployee(string firstName, string lastName)
+        public void ClickEditEmployee()
         {
             Click(EditButton);
-
-            var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
-            wait.Until(d =>
-            {
-                try
-                {
-                    var el = d.FindElement(EmployeeIdField);
-                    return el.Displayed && el.GetAttribute("value")?.Length > 0;
-                }
-                catch (NoSuchElementException) { return false; }
-            });
-
-            var fnInput = WaitForElementVisible(FirstNameField);
-            fnInput.SendKeys(OpenQA.Selenium.Keys.Control + "a");
-            fnInput.SendKeys(OpenQA.Selenium.Keys.Delete);
-            fnInput.SendKeys(firstName);
-            wait.Until(d => d.FindElement(FirstNameField).GetAttribute("value") == firstName);
-
-            var lnInput = WaitForElementVisible(LastNameField);
-            lnInput.SendKeys(OpenQA.Selenium.Keys.Control + "a");
-            lnInput.SendKeys(OpenQA.Selenium.Keys.Delete);
-            lnInput.SendKeys(lastName);
-            wait.Until(d => d.FindElement(LastNameField).GetAttribute("value") == lastName);
-
-            SaveEmployee();
         }
 
         public void DeleteEmployee()
