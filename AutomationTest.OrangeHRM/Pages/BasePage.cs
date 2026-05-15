@@ -16,7 +16,14 @@ namespace OrangeHRM.AutomationTests.Pages
 
         protected void Click(By locator)
         {
-            WaitForElementVisible(locator).Click();
+            try
+            {
+                WaitForElementVisible(locator).Click();
+            }
+            catch (StaleElementReferenceException)
+            {
+                WaitForElementVisible(locator).Click();
+            }
         }
 
         protected void SendKeys(By locator, string text)
@@ -37,17 +44,11 @@ namespace OrangeHRM.AutomationTests.Pages
         protected IWebElement WaitForElementVisible(By locator, int timeoutSeconds = 10)
         {
             var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(timeoutSeconds));
+            wait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException));
             return wait.Until(d =>
             {
-                try
-                {
-                    var el = d.FindElement(locator);
-                    return el.Displayed ? el : null;
-                }
-                catch (NoSuchElementException)
-                {
-                    return null;
-                }
+                var el = d.FindElement(locator);
+                return el.Displayed ? el : null;
             })!;
         }
 

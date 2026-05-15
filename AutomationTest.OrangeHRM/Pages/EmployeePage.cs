@@ -57,6 +57,7 @@ namespace OrangeHRM.AutomationTests.Pages
 
         public void SearchEmployee(string employeeId)
         {
+            WaitForElementVisible(SearchButton);
             SendKeys(EmployeeIdField, employeeId);
             Click(SearchButton);
             WaitForElementVisible(EmployeeTableRow);
@@ -81,11 +82,13 @@ namespace OrangeHRM.AutomationTests.Pages
             fnInput.SendKeys(OpenQA.Selenium.Keys.Control + "a");
             fnInput.SendKeys(OpenQA.Selenium.Keys.Delete);
             fnInput.SendKeys(firstName);
+            wait.Until(d => d.FindElement(FirstNameField).GetAttribute("value") == firstName);
 
             var lnInput = WaitForElementVisible(LastNameField);
             lnInput.SendKeys(OpenQA.Selenium.Keys.Control + "a");
             lnInput.SendKeys(OpenQA.Selenium.Keys.Delete);
             lnInput.SendKeys(lastName);
+            wait.Until(d => d.FindElement(LastNameField).GetAttribute("value") == lastName);
 
             SaveEmployee();
         }
