@@ -89,12 +89,6 @@ Tests are split into **base classes** (logic) and **browser runners** (infrastru
 - Employee tests use `ICollectionFixture` — one shared `AuthFixture` (single browser) per suite, tests run sequentially within the collection
 - MyInfo tests create their own `AuthFixture` instance per run — isolated browser, no shared state
 
-### Page Object helpers (BasePage)
-
-- `Click` — retries on `StaleElementReferenceException` and `ElementClickInterceptedException` (handles Vue overlays)
-- `ClearAndFill` — clears field and types value with separate `SendKeys` calls to trigger Vue input events
-- `WaitForElementToHaveValue` — waits until a field is visible and has a non-empty value
-
 ## Parallelism
 
 Configured in `xunit.runner.json`:
