@@ -3,11 +3,9 @@ using OpenQA.Selenium.Support.UI;
 
 namespace OrangeHRM.AutomationTests.Pages
 {
-    public class BasePage : IDisposable
+    public class BasePage
     {
         protected readonly IWebDriver Driver;
-
-        public IWebDriver WebDriver => Driver;
 
         public BasePage(IWebDriver driver)
         {
@@ -77,10 +75,5 @@ namespace OrangeHRM.AutomationTests.Pages
             }
         }
 
-        public virtual void Dispose()
-        {
-            Driver?.Quit();
-            Driver?.Dispose();
-        }
     }
 }
