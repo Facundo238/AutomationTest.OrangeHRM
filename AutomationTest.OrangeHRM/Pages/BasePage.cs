@@ -33,30 +33,8 @@ namespace OrangeHRM.AutomationTests.Pages
         protected void ClearAndFill(By locator, string text)
         {
             Click(locator);
-            var el = WaitForElementVisible(locator);
-            el.SendKeys(Keys.Control + "a");
-            el.SendKeys(text);
-        }
-
-        protected void WaitForElementToHaveValue(By locator, int timeoutSeconds = 10)
-        {
-            var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(timeoutSeconds));
-            wait.IgnoreExceptionTypes(typeof(NoSuchElementException), typeof(StaleElementReferenceException));
-            wait.Until(d =>
-            {
-                var el = d.FindElement(locator);
-                return el.Displayed && el.GetAttribute("value")?.Length > 0;
-            });
-        }
-
-        protected string GetText(By locator)
-        {
-            return WaitForElementVisible(locator).Text;
-        }
-
-        protected void WaitForElementAndClick(By locator, int timeoutSeconds = 10)
-        {
-            Click(locator);
+            SendKeys(locator, Keys.Control + "a");
+            SendKeys(locator, text);
         }
 
         protected IWebElement WaitForElementVisible(By locator, int timeoutSeconds = 10)

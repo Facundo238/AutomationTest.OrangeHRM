@@ -33,9 +33,8 @@ namespace OrangeHRM.AutomationTests.Tests
             context.EmployeePage.NavigateToEmployeeList();
             context.EmployeePage.ClickAddEmployee();
             context.EmployeePage.FillEmployee(data.FirstName, data.LastName, data.EmployeeId);
-            context.EmployeePage.SaveEmployee();
+            var success = context.EmployeePage.SaveEmployee();
 
-            var success = context.EmployeePage.IsSuccessMessageDisplayed();
             _output.WriteLine($"[CreateEmployee] Result: {(success ? "OK" : "FAILED")}");
             Assert.True(success, "Employee creation failed");
             // Assert.True(context.DbValidator.VerifyEmployeeExists(data.EmployeeId, data.FirstName, data.LastName), "Employee not found in DB");
@@ -54,11 +53,11 @@ namespace OrangeHRM.AutomationTests.Tests
 
             _output.WriteLine($"[UpdateEmployee] Updating to: {updated.FirstName} {updated.LastName}");
             context.EmployeePage.NavigateToEmployeeList();
-            context.EmployeePage.SearchEmployee(data.EmployeeId);
+            context.EmployeePage.SearchEmployeeById(data.EmployeeId);
             context.EmployeePage.ClickEditEmployee();
             context.EmployeePage.FillEmployee(updated.FirstName, updated.LastName);
-            context.EmployeePage.SaveEmployee();
-            var success = context.EmployeePage.IsSuccessMessageDisplayed();
+            var success = context.EmployeePage.SaveEmployee();
+
             _output.WriteLine($"[UpdateEmployee] Result: {(success ? "OK" : "FAILED")}");
             Assert.True(success, "Employee update failed");
             // Assert.True(context.DbValidator.VerifyEmployeeUpdated(data.EmployeeId, updated.FirstName, updated.LastName), "Employee update not reflected in DB");
@@ -76,10 +75,9 @@ namespace OrangeHRM.AutomationTests.Tests
 
             _output.WriteLine($"[DeleteEmployee] Deleting employee ID: {data.EmployeeId}");
             context.EmployeePage.NavigateToEmployeeList();
-            context.EmployeePage.SearchEmployee(data.EmployeeId);
-            context.EmployeePage.DeleteEmployee();
+            context.EmployeePage.SearchEmployeeById(data.EmployeeId);
+            var success = context.EmployeePage.DeleteEmployee();
 
-            var success = context.EmployeePage.IsSuccessMessageDisplayed();
             _output.WriteLine($"[DeleteEmployee] Result: {(success ? "OK" : "FAILED")}");
             Assert.True(success, "Employee delete failed");
             // Assert.True(context.DbValidator.VerifyEmployeeDeleted(data.EmployeeId), "Employee still present in DB after delete");

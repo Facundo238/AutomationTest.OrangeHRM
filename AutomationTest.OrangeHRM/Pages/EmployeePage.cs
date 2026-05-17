@@ -6,18 +6,17 @@ namespace OrangeHRM.AutomationTests.Pages
 {
     public class EmployeePage : BasePage
     {
-        private By AddEmployeeButton => By.XPath("//a[contains(text(), 'Add')]");
+        private By AddEmployeeButton => By.CssSelector("button:has(.bi-plus)");
         private By FirstNameField => By.CssSelector("input.orangehrm-firstname");
         private By LastNameField => By.CssSelector("input.orangehrm-lastname");
         private By EmployeeIdField => By.XPath("//label[normalize-space()='Employee Id']/ancestor::div[contains(@class,'oxd-input-group')]//input");
-        private By SaveButton => By.XPath("//button[@type='submit' and contains(., 'Save')]");
-        private By SuccessMessage => By.XPath("//div[contains(@class,'oxd-toast--success')]");
+        private By SaveButton => By.CssSelector("button[type='submit']");
+        private By SuccessMessage => By.CssSelector(".oxd-toast--success");
         private By SearchButton => By.XPath("//button[contains(., 'Search')]");
-        private By EditButton => By.XPath("//button[contains(@class,'oxd-table-cell-action-space')][.//i[contains(@class,'bi-pencil-fill')]]");
-        private By DeleteButton => By.XPath("//button[contains(@class,'oxd-table-cell-action-space')][.//i[contains(@class,'bi-trash')]]");
-        private By ConfirmDeleteButton => By.XPath("//button[contains(., 'Yes, Delete')]");
-        private By FormLoader => By.XPath("//div[contains(@class,'oxd-form-loader')]");
-        private By EmployeeTableRow => By.XPath("//div[contains(@class,'oxd-table-row--with-border')]");
+        private By EditButton => By.CssSelector(".oxd-table-cell-action-space:has(.bi-pencil-fill)");
+        private By DeleteButton => By.CssSelector(".oxd-table-cell-action-space:has(.bi-trash)");
+        private By ConfirmDeleteButton => By.CssSelector("button.oxd-button--label-danger");
+        private By FormLoader => By.CssSelector(".oxd-form-loader");
         private By EmployeeRowById(string id) =>
             By.XPath($"//div[contains(@class,'oxd-table-row--with-border')]//*[normalize-space()='{id}']");
 
@@ -35,7 +34,6 @@ namespace OrangeHRM.AutomationTests.Pages
         public void ClickAddEmployee()
         {
             Click(AddEmployeeButton);
-            WaitForElementVisible(FirstNameField);
             WaitForElementToDisappear(FormLoader);
         }
 
@@ -46,10 +44,10 @@ namespace OrangeHRM.AutomationTests.Pages
             if (employeeId != null) ClearAndFill(EmployeeIdField, employeeId);
         }
 
-        public void SaveEmployee()
+        public bool SaveEmployee()
         {
             Click(SaveButton);
-    
+            return IsSuccessMessageDisplayed();
         }
 
         public bool IsSuccessMessageDisplayed()
@@ -58,9 +56,9 @@ namespace OrangeHRM.AutomationTests.Pages
             catch { return false; }
         }
 
-        public void SearchEmployee(string employeeId)
+        public void SearchEmployeeById(string employeeId)
         {
-            SendKeys(EmployeeIdField, employeeId);
+            ClearAndFill(EmployeeIdField, employeeId);
             Click(SearchButton);
             WaitForElementVisible(EmployeeRowById(employeeId));
         }
@@ -71,17 +69,15 @@ namespace OrangeHRM.AutomationTests.Pages
             WaitForElementToDisappear(FormLoader);
         }
 
-        public void DeleteEmployee()
+        public bool DeleteEmployee()
         {
             Click(DeleteButton);
             WaitForElementVisible(ConfirmDeleteButton);
             Click(ConfirmDeleteButton);
-
+            WaitForElementToDisappear(ConfirmDeleteButton);
+            return IsSuccessMessageDisplayed();
         }
 
-        public bool IsEmployeeDisplayedInList()
-        {
-            return IsElementPresent(EmployeeTableRow);
-        }
     }
 }
+
