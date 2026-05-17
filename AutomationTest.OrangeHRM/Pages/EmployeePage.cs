@@ -11,7 +11,7 @@ namespace OrangeHRM.AutomationTests.Pages
         private By LastNameField => By.CssSelector("input.orangehrm-lastname");
         private By EmployeeIdField => By.XPath("//label[normalize-space()='Employee Id']/ancestor::div[contains(@class,'oxd-input-group')]//input");
         private By SaveButton => By.CssSelector("button[type='submit']");
-        private By SuccessMessage => By.CssSelector(".oxd-toast--success");
+        private By SuccessMessage => By.CssSelector("#oxd-toaster_1 .oxd-toast--success");
         private By SearchButton => By.XPath("//button[contains(., 'Search')]");
         private By EditButton => By.CssSelector(".oxd-table-cell-action-space:has(.bi-pencil-fill)");
         private By DeleteButton => By.CssSelector(".oxd-table-cell-action-space:has(.bi-trash)");
