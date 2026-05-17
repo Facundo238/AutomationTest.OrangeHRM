@@ -32,9 +32,9 @@ namespace OrangeHRM.AutomationTests.Pages
 
         protected void ClearAndFill(By locator, string text)
         {
+            Click(locator);
             var el = WaitForElementVisible(locator);
-            el.SendKeys(OpenQA.Selenium.Keys.Control + "a");
-            el.SendKeys(OpenQA.Selenium.Keys.Delete);
+            el.SendKeys(Keys.Control + "a");
             el.SendKeys(text);
         }
 

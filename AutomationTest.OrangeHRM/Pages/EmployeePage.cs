@@ -1,4 +1,5 @@
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using OrangeHRM.AutomationTests.Config;
 
 namespace OrangeHRM.AutomationTests.Pages
@@ -6,8 +7,8 @@ namespace OrangeHRM.AutomationTests.Pages
     public class EmployeePage : BasePage
     {
         private By AddEmployeeButton => By.XPath("//a[contains(text(), 'Add')]");
-        private By FirstNameField => By.XPath("//input[@placeholder='First Name']");
-        private By LastNameField => By.XPath("//input[@placeholder='Last Name']");
+        private By FirstNameField => By.CssSelector("input.orangehrm-firstname");
+        private By LastNameField => By.CssSelector("input.orangehrm-lastname");
         private By EmployeeIdField => By.XPath("//label[normalize-space()='Employee Id']/ancestor::div[contains(@class,'oxd-input-group')]//input");
         private By SaveButton => By.XPath("//button[@type='submit' and contains(., 'Save')]");
         private By SuccessMessage => By.XPath("//div[contains(@class,'oxd-toast--success')]");
@@ -15,7 +16,10 @@ namespace OrangeHRM.AutomationTests.Pages
         private By EditButton => By.XPath("//button[contains(@class,'oxd-table-cell-action-space')][.//i[contains(@class,'bi-pencil-fill')]]");
         private By DeleteButton => By.XPath("//button[contains(@class,'oxd-table-cell-action-space')][.//i[contains(@class,'bi-trash')]]");
         private By ConfirmDeleteButton => By.XPath("//button[contains(., 'Yes, Delete')]");
+        private By FormLoader => By.XPath("//div[contains(@class,'oxd-form-loader')]");
         private By EmployeeTableRow => By.XPath("//div[contains(@class,'oxd-table-row--with-border')]");
+        private By EmployeeRowById(string id) =>
+            By.XPath($"//div[contains(@class,'oxd-table-row--with-border')]//*[normalize-space()='{id}']");
 
         public EmployeePage(IWebDriver driver) : base(driver)
         {
@@ -32,6 +36,7 @@ namespace OrangeHRM.AutomationTests.Pages
         {
             Click(AddEmployeeButton);
             WaitForElementVisible(FirstNameField);
+            WaitForElementToDisappear(FormLoader);
         }
 
         public void FillEmployee(string? firstName = null, string? lastName = null, string? employeeId = null)
@@ -44,6 +49,7 @@ namespace OrangeHRM.AutomationTests.Pages
         public void SaveEmployee()
         {
             Click(SaveButton);
+    
         }
 
         public bool IsSuccessMessageDisplayed()
@@ -56,19 +62,21 @@ namespace OrangeHRM.AutomationTests.Pages
         {
             SendKeys(EmployeeIdField, employeeId);
             Click(SearchButton);
-            WaitForElementVisible(EmployeeTableRow);
+            WaitForElementVisible(EmployeeRowById(employeeId));
         }
 
         public void ClickEditEmployee()
         {
             Click(EditButton);
+            WaitForElementToDisappear(FormLoader);
         }
 
         public void DeleteEmployee()
         {
             Click(DeleteButton);
+            WaitForElementVisible(ConfirmDeleteButton);
             Click(ConfirmDeleteButton);
-            WaitForElementToDisappear(ConfirmDeleteButton);
+
         }
 
         public bool IsEmployeeDisplayedInList()

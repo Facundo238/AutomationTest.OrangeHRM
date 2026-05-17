@@ -58,7 +58,6 @@ namespace OrangeHRM.AutomationTests.Tests
             context.EmployeePage.ClickEditEmployee();
             context.EmployeePage.FillEmployee(updated.FirstName, updated.LastName);
             context.EmployeePage.SaveEmployee();
-
             var success = context.EmployeePage.IsSuccessMessageDisplayed();
             _output.WriteLine($"[UpdateEmployee] Result: {(success ? "OK" : "FAILED")}");
             Assert.True(success, "Employee update failed");
@@ -79,7 +78,10 @@ namespace OrangeHRM.AutomationTests.Tests
             context.EmployeePage.NavigateToEmployeeList();
             context.EmployeePage.SearchEmployee(data.EmployeeId);
             context.EmployeePage.DeleteEmployee();
-            _output.WriteLine("[DeleteEmployee] Result: OK");
+
+            var success = context.EmployeePage.IsSuccessMessageDisplayed();
+            _output.WriteLine($"[DeleteEmployee] Result: {(success ? "OK" : "FAILED")}");
+            Assert.True(success, "Employee delete failed");
             // Assert.True(context.DbValidator.VerifyEmployeeDeleted(data.EmployeeId), "Employee still present in DB after delete");
         }
     }
