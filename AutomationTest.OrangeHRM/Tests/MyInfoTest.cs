@@ -21,7 +21,7 @@ namespace OrangeHRM.AutomationTests.Tests
         {
             using var context = new UserSession(_auth);
             context.MyInfoPage.NavigateToMyInfo();
-            Assert.True(context.MyInfoPage.IsPersonalDetailsTitleVisible(), "Personal Details not visible for Admin");
+            Assert.True(context.MyInfoPage.IsPersonalDetailsTitleVisible());
         }
 
         public void Dispose() => _auth.Dispose();

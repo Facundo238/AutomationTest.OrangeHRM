@@ -5,14 +5,13 @@ namespace OrangeHRM.AutomationTests.Pages
 {
     public class MyInfoPage : BasePage
     {
-        private By PersonalDetailsTitle => By.XPath("//h6[contains(@class,'orangehrm-main-title') and normalize-space()='Personal Details']");
-        private By MyInfoMenuItem => By.XPath("//a[contains(@class,'oxd-main-menu-item') and .//span[normalize-space()='My Info']]");
+        private By PersonalDetailsTitle => By.CssSelector("h6.orangehrm-main-title");
+        private By MyInfoMenuItem       => By.CssSelector("a[href*='viewMyDetails']");
 
         public MyInfoPage(IWebDriver driver) : base(driver) { }
 
         public void NavigateToMyInfo()
         {
-            Driver.Navigate().GoToUrl(ConfigurationManager.BaseUrl);
             Click(MyInfoMenuItem);
             WaitForElementVisible(PersonalDetailsTitle);
         }

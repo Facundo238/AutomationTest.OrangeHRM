@@ -7,7 +7,7 @@ namespace OrangeHRM.AutomationTests.Pages
     {
         private By UsernameField => By.Name("username");
         private By PasswordField => By.Name("password");
-        private By LoginButton => By.XPath("//button[@type='submit']");
+        private By LoginButton => By.CssSelector("button.orangehrm-login-button");
 
         public LoginPage(IWebDriver driver) : base(driver)
         {

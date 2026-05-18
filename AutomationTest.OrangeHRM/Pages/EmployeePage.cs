@@ -10,12 +10,13 @@ namespace OrangeHRM.AutomationTests.Pages
         private By FirstNameField => By.CssSelector("input.orangehrm-firstname");
         private By LastNameField => By.CssSelector("input.orangehrm-lastname");
         private By EmployeeIdField => By.XPath("//label[normalize-space()='Employee Id']/ancestor::div[contains(@class,'oxd-input-group')]//input");
-        private By SaveButton => By.CssSelector("button[type='submit']");
+        private By SaveButton => By.CssSelector("form:has(.orangehrm-firstname) button.orangehrm-left-space");
         private By SuccessMessage => By.CssSelector("#oxd-toaster_1 .oxd-toast--success");
         private By SearchButton => By.XPath("//button[contains(., 'Search')]");
         private By EditButton => By.CssSelector(".oxd-table-cell-action-space:has(.bi-pencil-fill)");
         private By DeleteButton => By.CssSelector(".oxd-table-cell-action-space:has(.bi-trash)");
-        private By ConfirmDeleteButton => By.CssSelector("button.oxd-button--label-danger");
+        private By DeleteModal => By.CssSelector(".orangehrm-dialog-popup");
+        private By ConfirmDeleteButton => By.CssSelector(".orangehrm-modal-footer button.oxd-button--label-danger");
         private By FormLoader => By.CssSelector(".oxd-form-loader");
         private By EmployeeRowById(string id) =>
             By.XPath($"//div[contains(@class,'oxd-table-row--with-border')]//*[normalize-space()='{id}']");
@@ -28,7 +29,6 @@ namespace OrangeHRM.AutomationTests.Pages
         {
             Driver.Navigate().GoToUrl($"{ConfigurationManager.BaseUrl}web/index.php/pim/viewEmployeeList");
             WaitForElementVisible(AddEmployeeButton);
-            WaitForElementVisible(SearchButton);
         }
 
         public void ClickAddEmployee()
@@ -72,9 +72,9 @@ namespace OrangeHRM.AutomationTests.Pages
         public bool DeleteEmployee()
         {
             Click(DeleteButton);
-            WaitForElementVisible(ConfirmDeleteButton);
+            WaitForElementVisible(DeleteModal);
             Click(ConfirmDeleteButton);
-            WaitForElementToDisappear(ConfirmDeleteButton);
+            WaitForElementToDisappear(DeleteModal);
             return IsSuccessMessageDisplayed();
         }
 
